@@ -6,8 +6,7 @@ namespace Most
 	{
 
 		int Kanal { get; set; }
-		//
-		//
+		
 		void ZmienKanal(int kanal);
 
 	}
@@ -26,19 +25,17 @@ namespace Most
 
 		public void Wlacz()
 		{
-			Console.WriteLine("Telewizor LG włączony.");
+			Console.WriteLine("włączam się.");
 		}
 
 		public void Wylacz()
 		{
-			//
-			//
+            Console.WriteLine("wyłączam się.");
 		}
 
 		public void ZmienKanal(int kanal)
 		{
-			//
-			//
+            Console.WriteLine("zmieniam kanał: "+kanal);
 		}
 
 	}
@@ -48,8 +45,27 @@ namespace Most
 	public class TvXiaomi : ITelewizor
 	{
 
-		//
-		//
+		public TvXiaomi()
+		{
+			this.Kanal = 1;
+		}
+		public int Kanal { get; set; }
+
+		public void Wlacz()
+		{
+			Console.WriteLine("Telewizor Xiaomi włączony.");
+		}
+
+		public void Wylacz()
+		{
+            Console.WriteLine("Telewizor Xiaomi ");
+		}
+
+		public void ZmienKanal(int kanal)
+		{
+			Kanal= kanal;
+			//
+		}
 
 	}
 
@@ -65,10 +81,14 @@ namespace Most
 			//
 			//
 		}
-
-		//
-		//
-
+		public void Wlacz()
+        {
+			//
+        }
+		public void Wylacz()
+		{
+			//
+		}
 		public void ZmienKanal(int kanal)
 		{
 			//
@@ -86,24 +106,42 @@ namespace Most
 
 		public void DoWlacz()
 		{
-			Console.WriteLine("Pilot Harmony włącza telewizor...");
+			Console.WriteLine("włącz telewizor...");
 			Wlacz();
 		}
+		public void DoZmienKanal(int kanal)
+        {
+            Console.WriteLine("zmienia kanał...");
+			ZmienKanal(kanal);
+        }
+		public void DoWylacz()
+        {
+            Console.WriteLine("wyłącz telewizor...");
+			Wylacz();
+        }
 
 		//
 		//
 
 	}
 
-	public class PilotPhilips : PilotAbstrakcyjny
+	public class PilotLG : PilotAbstrakcyjny
 	{
+		public PilotLG(ITelewizor tv) : base(tv) { }
 
-		//
-		//
-
+		public void DoWlacz()
+		{
+			Console.WriteLine("włącz telewizor...");
+			Wlacz();
+		}
+		public void DoZmienKanal(int kanal)
+		{
+			Console.WriteLine("zmienia kanał...");
+			ZmienKanal(kanal);
+		}
 		public void DoWylacz()
 		{
-			Console.WriteLine("Pilot Philips wyłącza telewizor...");
+			Console.WriteLine("wyłącz telewizor...");
 			Wylacz();
 		}
 
@@ -117,12 +155,31 @@ namespace Most
 		{
 
 			ITelewizor tv = new TvLg();
-			//
-			//
+			PilotHarmony pilotHarmony = new PilotHarmony(tv);
+			PilotLG pilotLG = new PilotLG(tv);
+			TvLg lg=new TvLg();
+            //
+            //
 
+            Console.Write("Pilot Harmony - ");
 			pilotHarmony.DoWlacz();
+
+            Console.Write("Telewizor LG - ");
+			lg.Wlacz();
+
+            Console.WriteLine("Sprawdź kanał - bieżący kanał: "+ tv.Kanal);
+
+            Console.Write("Pilot LG - ");
+			pilotLG.DoZmienKanal(100);
+
+            Console.Write("Telewizor LG - ");
+			lg.ZmienKanal(100);
+
+			Console.WriteLine("Sprawdź kanał - bieżący kanał: " + tv.Kanal);
+
+
 			Console.WriteLine("Kanał: " + tv.Kanal);
-			pilotPhilips.DoZmienKanal(100);
+			pilotLG.DoZmienKanal(100);
 			Console.WriteLine("Kanał: " + tv.Kanal);
 			pilotHarmony.DoWylacz();
 
